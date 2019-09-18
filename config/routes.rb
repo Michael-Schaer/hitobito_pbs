@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     get 'censuses' => 'censuses#new' # route required for language switch
 
     resources :groups do
+      resources :crises, only: [:create, :update]
+
       member do
         get 'pending_approvals' => 'group/pending_approvals#index'
         get 'approved_approvals' => 'group/pending_approvals#approved'
@@ -67,6 +69,10 @@ Rails.application.routes.draw do
         as: :list_kantonalverband_camps
     get 'list_camps_in_canton' => 'event/lists#camps_in_canton', as: :list_camps_in_canton
     get 'list_camps_abroad' => 'event/lists#camps_abroad', as: :list_camps_abroad
+
+    resources :black_lists
+
+    get 'help' => 'help#index'
 
   end
 

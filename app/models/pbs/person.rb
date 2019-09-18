@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#  Copyright (c) 2012-2017, Pfadibewegung Schweiz. This file is part of
+#  Copyright (c) 2012-2018, Pfadibewegung Schweiz. This file is part of
 #  hitobito_pbs and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_pbs.
@@ -64,6 +64,7 @@ module Pbs::Person
 
 
     belongs_to :kantonalverband, class_name: 'Group' # might also be Group::Bund
+    has_many :crises, foreign_key: :creator_id
 
 
     validates :salutation,
@@ -79,8 +80,18 @@ module Pbs::Person
     validates :entry_date, :leaving_date,
               timeliness: { type: :date, allow_blank: true, before: Date.new(9999, 12, 31) }
 
+    validates :ahv_number,
+              format: { with: /\A\d{3}\.\d{4}\.\d{4}\.\d{2}\z/,
+                        message: :must_be_valid_social_security_number,
+                        allow_blank: true }
+
     after_create :set_pbs_number!, if: :pbs_number_column_available?
     after_save :reset_kantonalverband!, if: :primary_group_id_changed?
+    after_save :send_black_list_mail, if: :blacklisted_attribute_changed?
+  end
+
+  def send_black_list_mail
+    BlackListMailer.hit(self).deliver_now
   end
 
   def salutation_label
@@ -100,6 +111,10 @@ module Pbs::Person
 
   def reset_kantonalverband!
     update_column(:kantonalverband_id, find_kantonalverband.try(:id))
+  end
+
+  def black_listed?
+    Person::BlackListDetector.new(self, attributes.slice(*changed)).occures?
   end
 
   private
@@ -125,6 +140,10 @@ module Pbs::Person
   # Missing when core person is seeded and wagon migrations have not be run
   def pbs_number_column_available?
     self.class.column_names.include?('pbs_number')
+  end
+
+  def blacklisted_attribute_changed?
+    %w(first_name last_name email).any? { |k| changes.key?(k) } && black_listed?
   end
 
 end

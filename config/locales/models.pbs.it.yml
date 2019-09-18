@@ -746,6 +746,7 @@ it:
         bsv_days: Numero di giorni UFAS
         camp_days: Numero di giorni di campo
         camp_submitted: Inoltrato
+        camp_submitted_at: Inoltrato il
         course_languages: Lingua del corso
         express_fee: Spese per un'elaborazione espresso
         expected_participants: Partecipanti stimati
@@ -868,7 +869,6 @@ it:
         website: Sito web
         pbs_shortname: Abbreviazione MSS
         bank_account: Coordinate bancarie/postali
-        description: Descrizione
         cantons: Cantoni
       people_relation:
         kinds:

@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+schekka:
+  creator: be_crisis_member
+  group: schekka
+  acknowledged: false

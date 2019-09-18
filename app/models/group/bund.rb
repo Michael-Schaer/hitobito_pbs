@@ -91,7 +91,7 @@ class Group::Bund < Group
   end
 
   class Geschaeftsleitung < ::Role
-    self.permissions = [:layer_and_below_read, :contact_data, :approve_applications, :finance]
+    self.permissions = [:layer_and_below_read, :contact_data, :approve_applications]
   end
 
   class GrossanlassCoach < ::Role
@@ -107,7 +107,7 @@ class Group::Bund < Group
   end
 
   class Kassier < ::Role
-    self.permissions = [:layer_and_below_read, :contact_data, :finance]
+    self.permissions = [:layer_and_below_read, :contact_data]
   end
 
   class Kontaktperson < ::Role
@@ -124,7 +124,7 @@ class Group::Bund < Group
   end
 
   class LeitungKernaufgabeKommunikation < ::Role
-    self.permissions = [:group_read, :contact_data]
+    self.permissions = [:group_read, :crisis_trigger]
   end
 
   class LeitungKernaufgabeProgramm < ::Role
@@ -148,12 +148,12 @@ class Group::Bund < Group
   end
 
   class ItSupport < ::Role
-    self.permissions = [:layer_and_below_full, :contact_data, :admin, :impersonation, :finance]
+    self.permissions = [:layer_and_below_full, :contact_data, :admin, :impersonation]
   end
 
 
   class MitgliedKrisenteam < ::Role
-    self.permissions = [:group_read, :contact_data]
+    self.permissions = [:group_read, :contact_data, :crisis_trigger]
   end
 
   class Passivmitglied < ::Role
@@ -178,7 +178,7 @@ class Group::Bund < Group
   end
 
   class Sekretariat < ::Role
-    self.permissions = [:layer_and_below_full, :contact_data, :finance]
+    self.permissions = [:layer_and_below_full, :contact_data]
   end
 
   class Spezialfunktion < ::Role
@@ -203,6 +203,10 @@ class Group::Bund < Group
 
   class VerantwortungIntegration < ::Role
     self.permissions = [:group_read, :contact_data]
+  end
+
+  class VerantwortungKrisenteam < ::Role
+    self.permissions = [:group_read, :contact_data, :crisis_trigger]
   end
 
   class VerantwortungLagermeldung < ::Role
@@ -289,6 +293,7 @@ class Group::Bund < Group
         VerantwortungLagermeldung,
         VerantwortungPr,
         VerantwortungPraeventionSexuellerAusbeutung,
+        VerantwortungKrisenteam,
 
         InternationalCommissionerIcWagggs,
         InternationalCommissionerIcWosm,

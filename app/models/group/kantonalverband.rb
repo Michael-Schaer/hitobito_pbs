@@ -65,7 +65,7 @@ class Group::Kantonalverband < Group
   end
 
   def census_groups(year)
-    MemberCount.total_by_regionen(year, self)
+    MemberCount.totals_by(year, :abteilung_id, kantonalverband_id: id)
   end
 
   def census_details(year)
@@ -107,11 +107,11 @@ class Group::Kantonalverband < Group
   end
 
   class Kantonsleitung < ::Role
-    self.permissions = [:layer_and_below_full, :contact_data, :approve_applications, :finance]
+    self.permissions = [:layer_and_below_full, :contact_data, :approve_applications]
   end
 
   class Kassier < ::Role
-    self.permissions = [:layer_and_below_read, :contact_data, :finance]
+    self.permissions = [:layer_and_below_read, :contact_data]
   end
 
   class Leitungskursbetreuung < ::Role
@@ -127,7 +127,11 @@ class Group::Kantonalverband < Group
   end
 
   class MitgliedKrisenteam < ::Role
-    self.permissions = [:group_read, :contact_data]
+    self.permissions = [:group_read, :contact_data, :crisis_trigger]
+  end
+
+  class Krisenverantworlicher < ::Role
+    self.permissions = [:group_read, :crisis_trigger]
   end
 
   class Passivmitglied < ::Role
@@ -152,7 +156,7 @@ class Group::Kantonalverband < Group
   end
 
   class Sekretariat < ::Role
-    self.permissions = [:layer_and_below_full, :contact_data, :finance]
+    self.permissions = [:layer_and_below_full, :contact_data]
   end
 
   class Spezialfunktion < ::Role
@@ -200,7 +204,7 @@ class Group::Kantonalverband < Group
   end
 
   class VerantwortungKrisenteam < ::Role
-    self.permissions = [:group_read, :contact_data]
+    self.permissions = [:group_read, :contact_data, :crisis_trigger]
   end
 
   class VerantwortungLagermeldung < ::Role

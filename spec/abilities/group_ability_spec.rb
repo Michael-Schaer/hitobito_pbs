@@ -72,7 +72,24 @@ describe GroupAbility do
         is_expected.to_not be_able_to(:index_pending_approvals, groups(:schekka))
       end
     end
-
   end
 
+  context 'creator of crisis' do
+    let(:group)          { groups(:schekka) }
+    let(:ability)        { Ability.new(crisis_creator) }
+    let(:crisis_creator) { Fabricate(:person) }
+
+    it 'may not index_people' do
+      is_expected.not_to be_able_to(:index_people, group)
+      is_expected.not_to be_able_to(:index_people, groups(:pegasus))
+      is_expected.not_to be_able_to(:index_people, groups(:medusa))
+    end
+
+    it 'may index_people on abteilung and below if crisis_creator' do
+      crises(:schekka).update(creator: crisis_creator)
+      is_expected.to be_able_to(:index_people, group)
+      is_expected.to be_able_to(:index_people, groups(:pegasus))
+      is_expected.to be_able_to(:index_people, groups(:medusa))
+    end
+  end
 end

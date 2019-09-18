@@ -1,7 +1,7 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2017, Pfadibewegung Schweiz. This file is part of
+#  Copyright (c) 2012-2018, Pfadibewegung Schweiz. This file is part of
 #  hitobito_pbs and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_pbs.
@@ -14,12 +14,12 @@ module HitobitoPbs
     app_requirement '>= 0'
 
     # Add a load path for this specific wagon
-    config.autoload_paths += %W( #{config.root}/app/abilities
+    config.autoload_paths += %W[ #{config.root}/app/abilities
                                  #{config.root}/app/domain
                                  #{config.root}/app/jobs
-                                 #{config.root}/app/serializers)
+                                 #{config.root}/app/serializers ]
 
-    config.to_prepare do
+    config.to_prepare do # rubocop:disable Metrics/BlockLength
 
       ### models
       Group.send        :include, Pbs::Group
@@ -33,6 +33,7 @@ module HitobitoPbs
       Event::Application.send :include, Pbs::Event::Application
 
       PeopleRelation.kind_opposites['sibling'] = 'sibling'
+      PhoneNumber.send :include, Pbs::PhoneNumber
 
       ## domain
       Bsv::Info.leader_roles += [Event::Course::Role::Helper]
@@ -72,7 +73,11 @@ module HitobitoPbs
 
       ### abilities
       Ability.store.register Event::ApprovalAbility
+      AbilityDsl::UserContext::GROUP_PERMISSIONS << :crisis_trigger
+      AbilityDsl::UserContext::LAYER_PERMISSIONS << :crisis_trigger
       GroupAbility.send :include, Pbs::GroupAbility
+      PersonReadables.send :include, Pbs::PersonReadables
+      PersonAbility.send :include, Pbs::PersonAbility
       EventAbility.send :include, Pbs::EventAbility
       EventAbility.send :include, Pbs::Event::Constraints
       Event::ApplicationAbility.send :include, Pbs::Event::ApplicationAbility
@@ -82,7 +87,6 @@ module HitobitoPbs
       Event::RoleAbility.send :include, Pbs::Event::Constraints
       QualificationAbility.send :include, Pbs::QualificationAbility
       VariousAbility.send :include, Pbs::VariousAbility
-
 
       ### decorators
       EventDecorator.send :include, Pbs::EventDecorator
@@ -118,6 +122,10 @@ module HitobitoPbs
       FilterNavigation::Events.send :include, Pbs::FilterNavigation::Events
       Dropdown::PeopleExport.send :include, Pbs::Dropdown::PeopleExport
       
+      admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
+      admin[:active_for] << 'black_lists'
+      ContactAttrs::ControlBuilder.send :include, Pbs::ContactAttrs::ControlBuilder
+
       ### jobs
       Event::ParticipationConfirmationJob.send :include, Pbs::Event::ParticipationConfirmationJob
 
@@ -142,6 +150,13 @@ module HitobitoPbs
             can?(:list_abroad, Event::Camp) ||
             can?(:list_cantonal, Event::Camp)
         end
+      )
+      index_admin = NavigationHelper::MAIN.index { |opts| opts[:label] == :admin }
+      NavigationHelper::MAIN.insert(
+        index_admin,
+        label: :help,
+        icon_name: :'info-circle',
+        url: :help_path
       )
 
       # rubocop:enable SingleSpaceBeforeFirstArg

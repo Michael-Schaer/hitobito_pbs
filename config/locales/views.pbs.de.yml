@@ -36,6 +36,10 @@ de:
   census_evaluation/kantonalverband:
     email_sent: Erinnerungsemail an %{abteilung} geschickt
 
+  crises:
+    update:
+      too_old:  Die Krise ist zu alt um zu quittieren
+
   devise:
     sessions:
       new:
@@ -81,7 +85,8 @@ de:
         leaders: Leitung
         cooks: Küche
         participants: Teilnehmende
-
+      list:
+        not_persisted: Noch nicht gespeichert
     lists:
       nav_left_camps:
         all_camps: Lager ganze Schweiz
@@ -163,6 +168,7 @@ de:
       confirm_cancel: Willst Du Dich wirklich von diesem Lager abmelden?
       submit_camp: Einreichen
       camp_submitted: Eingereicht
+      camp_submitted_at: Eingereicht am
     application_fields_pbs:
       paper_application_required_caption: Teilnehmende müssen eine Papieranmeldung einreichen
       participants_can_apply_caption: Teilnehmende können sich selbst anmelden
@@ -237,10 +243,43 @@ de:
         course_kind_all: Alle
 
   groups:
+    ongoing_crisis: "%{creator} hat auf dieser Gruppe eine Krise ausgelöst"
     tabs:
       population: Bestand
       statistic: Statistik
       approvals: Kursfreigaben (%{count})
+    actions_show_pbs:
+      crisis: Krise
+      crisis_done: Krise quittieren
+      confirm_crisis: Bist du sicher, dass du die Krise auf der Gruppe auslösen möchtest. Die Zuständigen Krisenteams werden über deinen Zugriff informiert. Bitte gehe sorgsam mit den Daten um.
+
+  help:
+    index:
+      title: Hilfe
+      description_html: Informationen zu den neusten Releases findest Du <a href="https://www.scout.ch/de/pfadi-online/midata/release/" target="_blank">hier</a>.
+      guides:
+        title: Leitfäden
+        description: "Diese Leitfäden helfen dir bei der Administration von Kursen und Lagern:"
+        hering:
+          url: http://hering.scouts.ch
+          title: "Hering: Leitfaden zur Administration von Pfadilagern"
+          description: "Der Hering bietet dir sämtliche Informationen zur Administration von Pfadilagern. Er führt dich Schritt für Schritt durch alle wichtigen Dokumente. Mit diesem Leitfaden wirst du keinen wichtigen Punkt vergessen."
+        coaches:
+          url: http://coaches.scouts.ch
+          title: 1x1 MiData für Coaches
+          description: "Das «1x1 MiData für Coaches» erläutert die für Coaches wichtigsten Funktionen der PBS-Mitgliederdatenbank (Mi- Data). Es dient sowohl als Factsheet, als auch als Vorbereitung für das MF-Coach und den Coachkurs."
+        anker:
+          url: http://anker.scouts.ch
+          title: "Anker: Leitfaden zur PBS Kursadministration"
+          description: "Für Kursleiter/innen und Leiterkursbetreuer/innen: Alle administrativen Vorgänge, die bei der Anmeldung und Durchführung eines J+S- oder BSV-Kurses beachtet werden müssen, sind hier detailliert beschrieben."
+        pilot:
+          url: http://pilot.scouts.ch
+          title: "Pilot: Leitfaden zur PBS-Kursadministration in der MiData und der NDBJS"
+          description: "Leitfaden für Sekretariate und kantonale Ausbildungsverantwortliche zur Kursadministration in der MiData und der NDBJS"
+        ticket:
+          url: http://ticket.scouts.ch
+          title: "Ticket: Leitfaden zur Anmeldung von Kursteilnehmenden"
+          description: "Das Ticket beschreibt den TN-Anmeldeprozess über die MiData (Mitgliederdatenbank der PBS)"
 
   member_counts:
     created_data_for_year: Die Zahlen von Total %{total} Mitgliedern wurden für %{year} erfolgreich erzeugt.
@@ -251,6 +290,7 @@ de:
 
   navigation:
     camps: Lager
+    help: Hilfe
 
   people:
     fields:
@@ -280,3 +320,15 @@ de:
     fields_pbs:
       notification: Benachrichtigung
       notification_hint: Bestehende Personen werden per E-Mail über die Änderung informiert, sofern Du dadurch mehr Personendaten einsehen kannst.
+
+  black_lists:
+    form:
+      pbs_number_format: Beispiel 123-123-123
+
+    global:
+      link:
+        add: Person hinzufügen
+    new:
+      title: Person hinzufügen
+    edit:
+      title: Eintrag editieren

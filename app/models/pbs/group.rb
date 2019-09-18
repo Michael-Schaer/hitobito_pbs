@@ -42,12 +42,21 @@ module Pbs::Group
   extend ActiveSupport::Concern
 
   included do
-    self.used_attributes += [:website, :bank_account, :description, :pbs_shortname]
+    self.used_attributes += [:website, :bank_account, :pbs_shortname]
     self.superior_attributes = [:pbs_shortname]
 
     validates :description, length: { allow_nil: true, maximum: 2**16 - 1 }
+    has_many :crises
 
     root_types Group::Bund
+  end
+
+  def active_crisis_acknowledgeable?(person)
+    active_crisis && !active_crisis.acknowledged && active_crisis.creator != person
+  end
+
+  def active_crisis
+    @active_crisis ||= crises.active.first
   end
 
   def pending_approvals?

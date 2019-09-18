@@ -6,7 +6,6 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
-
 de:
   activerecord:
     models:
@@ -212,6 +211,10 @@ de:
       group/bund/verantwortung_integration:
         one: Verantwortlicher Integration
         other: Verantwortliche Integration
+        description:
+      group/bund/verantwortung_krisenteam:
+        one: Verantwortlicher Krisenteam
+        other: Verantwortliche Krisenteam
         description:
       group/bund/verantwortung_lagermeldung:
         one: Verantwortlicher Lagermeldung
@@ -841,7 +844,6 @@ de:
         other: Mitglieder
         description:
 
-
       event/camp:
         one: Lager
         other: Lager
@@ -910,6 +912,10 @@ de:
         one: LKB
         other: LKBs
 
+      black_list:
+        one: Schwarze Liste
+        other: Schwarze Liste
+
       census:
         one: Bestandesmeldungsperiode
         other: Bestandesmeldungsperioden
@@ -957,6 +963,7 @@ de:
         bsv_days: Anzahl BSV-Tage
         camp_days: Anzahl Lagertage
         camp_submitted: Eingereicht
+        camp_submitted_at: Eingereicht am
         course_languages: Kurssprachen
         express_fee: Expressgebühr
         expected_participants: Erwartete Teilnehmer/-innen
@@ -1086,12 +1093,20 @@ de:
         website: Webseite
         pbs_shortname: PBS Kürzel
         bank_account: Bank-/Postverbindung
-        description: Beschreibung
         cantons: Kantone
 
       people_relation:
         kinds:
           sibling: Geschwister
+
+      black_list:
+        first_name: Vorname
+        last_name: Nachname
+        pbs_number: PBS-ID
+        email: E-Mail Adresse
+        phone_number: Telefonnummer
+        reference_name: Referenzname
+        reference_phone_number: Referenz Tel.
 
       census:
         year: Jahr
@@ -1126,6 +1141,11 @@ de:
         created_at: Von
         deleted_at: Bis
 
+        class:
+          permission:
+            description:
+              crisis_trigger: Auslösen und quittieren von Krisen.
+
       qualification_kind:
         manual: Manuell erfassbar
 
@@ -1135,6 +1155,7 @@ de:
     errors:
       messages:
         must_be_multiple_of: muss ein vielfaches von %{multiple} sein.
+        must_be_valid_social_security_number: muss eine gültige AHV-Nummer (756.1234.5678.97) sein
       models:
         role:
           attributes:
@@ -1142,3 +1163,5 @@ de:
               on_or_before: muss in der Vergangenheit liegen.
             deleted_at:
               after: muss nach "Von" liegen.
+        crisis:
+          another_active: Eine andere Krise ist bereits aktiv auf dieser Gruppe
